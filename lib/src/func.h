@@ -9,13 +9,24 @@
 #ifndef FUNC_H
 #define FUNC_H
 
+#include <stdio.h>
+
 typedef struct{
-    int id;
-    char name[40];
-    char major[4];
-    char city[15];
-    int graduation[3];
-    int subjects[4];
+  int id;
+  char name[40];
+  char major[4];
+  char city[15];
+  char graduation[10];
 } student;
+
+typedef struct{
+  int id;
+  int a;
+  int b;
+  int c;
+  int d;
+} sgrades;
+
+int fileLines(FILE* fp);
 
 #endif
