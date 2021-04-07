@@ -95,6 +95,8 @@ int studentsNumHandler(student *stud[], int n, char buff[]){
     argsv[argsc++] = token;
     token = strtok(NULL, " ");
   }
+  if( !strcmp(argsv[0],"*") && argsc==1)
+    argsc = 0;
   switch (argsc){
     case 0:
       return n;
@@ -206,10 +208,10 @@ int main(int argc, char *argv[]){
   // x = studentsNumMajor(&students, count, "ITC");
   // printf("Students: %d\n", x);
 
-  // int x;
-  // char str[] = "ITC";
-  // x = studentsNumHandler(&students, count, str);
-  // printf("Students: %d\n", x);
+  int x;
+  char str[] = "*";
+  x = studentsNumHandler(&students, count, str);
+  printf("Students: %d\n", x);
 
 
   free(students);
