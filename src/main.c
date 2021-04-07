@@ -65,27 +65,27 @@ char* graduationDate(student stud[], int n, int id){
   return "/";
 }
 
-int studentsNumMajorCity(student stud[], int n, char major[], char city[]){
+int studentsNumMajorCity(student *stud[], int n, char major[], char city[]){
   int studentCount = 0;
   for (int i=0; i<n; i++){
-    if(!strcmp(stud[i].major,major) && !strcmp(stud[i].city, city)){
+    if(!strcmp((*stud+i)->major,major) && !strcmp((*stud+i)->city, city)){
       studentCount++;
     }
   }
   return studentCount;
 }
 
-int studentsNumMajor(student stud[], int n, char major[]){
+int studentsNumMajor(student *stud[], int n, char major[]){
   int studentCount = 0;
   for (int i=0; i<n; i++){
-    if(!strcmp(stud[i].major, major)){
+    if(!strcmp((*stud+i)->major, major)){
       studentCount++;
     }
   }
   return studentCount;
 }
 
-int studentsNumHandler(student stud[], int n, char buff[]){
+int studentsNumHandler(student *stud[], int n, char buff[]){
   
   int argsc = 0;
   char *token = strtok(buff, " ");
@@ -105,6 +105,10 @@ int studentsNumHandler(student stud[], int n, char buff[]){
   }
 }
 
+// student studentsNameMajorCiity(student *stud[], int n, char major[], char city[]){
+//   int num = studentsNumMajorCity()
+  
+// }
 
 int main(int argc, char *argv[]){
     
@@ -195,16 +199,16 @@ int main(int argc, char *argv[]){
   // printf("%s\n", *x);
 
   // int x;
-  // x = studentsNumMajor(students, count, "ITC");
+  // x = studentsNumMajorCity(&students, count, "ITC", "Merida");
   // printf("Students: %d\n", x);
 
   // int x;
-  // x = studentsNumMajorCity(students, count, "ITC", "Merida");
+  // x = studentsNumMajor(&students, count, "ITC");
   // printf("Students: %d\n", x);
 
   // int x;
-  // char str[] = "ITC Mty";
-  // x = studentsNumHandler(students, count, str);
+  // char str[] = "ITC";
+  // x = studentsNumHandler(&students, count, str);
   // printf("Students: %d\n", x);
 
 
