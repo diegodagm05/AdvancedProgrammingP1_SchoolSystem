@@ -21,12 +21,15 @@ typedef struct{
 
 typedef struct{
   int id;
-  int a;
-  int b;
-  int c;
-  int d;
+  int a,b,c,d;
 } sgrades;
 
 int fileLines(FILE* fp);
+
+void kardex(sgrades grade[], int n, int id);
+
+void graduationDate(student stud[], int n, int id);
+
+int studentsNumMajorCity(student stud[], int n, char major[], char city[]);
 
 #endif
