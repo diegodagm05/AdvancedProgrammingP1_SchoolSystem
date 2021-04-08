@@ -151,6 +151,79 @@ void studentsNameHandler(student *stud[], int n, char buff[], char *names[]){
   }
 }
 
+int studentsNameOperatorNum(sgrades *grades[], int n, char *operator, int value){
+  int total=0, avgs[n];
+  for(int i=0; i<n; i++){
+    avgs[i] = ( (*grades+i)->a + (*grades+i)->b + (*grades+i)->c + (*grades+i)->d ) /4;
+  }
+  
+  if(!strcmp(operator, "<")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] < value){
+        total++;
+      }
+    }
+  }
+  else if(!strcmp(operator, ">")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] > value){
+        total++;
+      }
+    }
+  }
+  else if(!strcmp(operator, "==")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] == value){
+        total++;
+      }
+    }
+  }
+  else if(!strcmp(operator, "!=")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] != value){
+        total++;
+      }
+    }
+  }
+  return total;
+}
+
+void studentsNameOperator(sgrades *grades[], int n, char *operator, int value, int *ids){
+  int avgs[n], j=0, size;
+  for(int i=0; i<n; i++){
+    avgs[i] = ( (*grades+i)->a + (*grades+i)->b + (*grades+i)->c + (*grades+i)->d ) /4;
+  }
+  if(!strcmp(operator, "<")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] < value){
+        ids[j++] = (*grades+i)->id;
+      }
+    }
+  }
+  else if(!strcmp(operator, ">")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] > value){
+        ids[j++] = (*grades+i)->id;
+      }
+    }
+  }
+  else if(!strcmp(operator, "==")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] == value){
+        ids[j++] = (*grades+i)->id;
+      }
+    }
+  }
+  else if(!strcmp(operator, "!=")){
+    for(int i=0; i<n; i++){
+      if( avgs[i] != value){
+        ids[j++] = (*grades+i)->id;
+      }
+    }
+  }
+  // return ids;
+}
+
 int main(int argc, char *argv[]){
     
     // printf ("argv[1]: %s\n", argv[1]);
@@ -273,6 +346,19 @@ int main(int argc, char *argv[]){
   // for(int i=0; i<size; i++){
   //   printf("%s\n", namesToPrint[i]);
   // }
+
+  int x = studentsNameOperatorNum(&grades, count2, "!=", 90);
+
+  int *ptr, idsToPrint[x];
+  studentsNameOperator(&grades, count2, "!=", 90, idsToPrint);
+  for(int i=0; i<x; i++){
+    for(int j=0; j<count; j++){
+      if( *(idsToPrint + i) == students[j].id){
+        printf("%s\n", students[j].name);
+        break;
+      }
+    }
+  }
 
   free(students);
   free(grades);
