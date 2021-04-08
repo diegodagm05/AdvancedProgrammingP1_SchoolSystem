@@ -297,12 +297,36 @@ int main(int argc, char *argv[]){
   //   printf("%d\t%d\t%d\t%d\t%d\n", grades[j].id, grades[j].a, grades[j].b, grades[j].c, grades[j].d);
   // }
 
-  printf(" ------------------------\n");
-  printf("|         [MENU]         |\n");
-  printf("| 1) Mostrar Estudiantes |\n");
-  printf("| 2) Realizar consulta   |\n");
-  printf("| 3) Terminar programa   |\n");
-  printf(" ------------------------\n\n");
+  int opt=0;
+  while(opt != 3){
+    
+    printf(" ------------------------\n");
+    printf("|         [MENU]         |\n");
+    printf("| 1) Mostrar Estudiantes |\n");
+    printf("| 2) Realizar consulta   |\n");
+    printf("| 3) Terminar programa   |\n");
+    printf(" ------------------------\n\n");
+    printf("Option: ");
+    scanf("%d",&opt);
+
+    if( opt == 1 ){
+      for(int i=0; i<count; i++){
+        for(int j=0; j<count2; j++){
+          if( students[i].id == grades[j].id)
+            printf("%d\t%s\t%s %s\t%s\t%d %d %d %d\n", 
+            students[i].id, students[i].name, students[i].major, students[i].city, 
+            students[i].graduation, grades[j].a, grades[j].b, grades[j].c, grades[j].d);
+        }
+      }
+    }
+    else if( opt == 2 ){
+
+    }
+    else if( opt == 3 )
+      return 0;
+    else
+      printf("Invalid option\n");
+  }
 
   // sgrades x;
   // x = kardex(&grades, count2, 987);
@@ -347,18 +371,18 @@ int main(int argc, char *argv[]){
   //   printf("%s\n", namesToPrint[i]);
   // }
 
-  int x = studentsNameOperatorNum(&grades, count2, "!=", 90);
+  // int x = studentsNameOperatorNum(&grades, count2, "!=", 90);
 
-  int *ptr, idsToPrint[x];
-  studentsNameOperator(&grades, count2, "!=", 90, idsToPrint);
-  for(int i=0; i<x; i++){
-    for(int j=0; j<count; j++){
-      if( *(idsToPrint + i) == students[j].id){
-        printf("%s\n", students[j].name);
-        break;
-      }
-    }
-  }
+  // int *ptr, idsToPrint[x];
+  // studentsNameOperator(&grades, count2, "!=", 90, idsToPrint);
+  // for(int i=0; i<x; i++){
+  //   for(int j=0; j<count; j++){
+  //     if( *(idsToPrint + i) == students[j].id){
+  //       printf("%s\n", students[j].name);
+  //       break;
+  //     }
+  //   }
+  // }
 
   free(students);
   free(grades);
