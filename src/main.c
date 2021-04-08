@@ -107,10 +107,49 @@ int studentsNumHandler(student *stud[], int n, char buff[]){
   }
 }
 
-// student studentsNameMajorCiity(student *stud[], int n, char major[], char city[]){
-//   int num = studentsNumMajorCity()
-  
-// }
+void studentsNameMajorCity(student *stud[], int n, char major[], char city[],char *names[]){
+  int j=0;
+  for (int i=0; i<n; i++){
+    if(!strcmp((*stud+i)->major,major) && !strcmp((*stud+i)->city, city)){
+      names[j++] = (*stud+i)->name;
+    }
+  }
+}
+
+void studentsNameMajor(student *stud[], int n, char major[], char *names[]){
+  int j=0;
+  for (int i=0; i<n; i++){
+    if(!strcmp((*stud+i)->major, major)){
+      names[j++] = (*stud+i)->name;
+    }
+  }
+}
+
+void studentsNameHandler(student *stud[], int n, char buff[], char *names[]){
+  int argsc = 0;
+  char *token = strtok(buff, " ");
+  char *argsv[2];
+
+  while (token != NULL){
+    argsv[argsc++] = token;
+    token = strtok(NULL, " ");
+  }
+  if( !strcmp(argsv[0],"*") && argsc==1)
+    argsc = 0;
+  switch (argsc){
+    case 0:
+      for(int i=0; i<n;i++){
+        names[i] = (*stud+i)->name;
+      }
+      break;
+    case 1:
+      studentsNameMajor(stud, n, argsv[0], names);
+      break;
+    case 2:
+      studentsNameMajorCity(stud, n, argsv[0], argsv[1], names);
+      break;
+  }
+}
 
 int main(int argc, char *argv[]){
     
@@ -208,11 +247,32 @@ int main(int argc, char *argv[]){
   // x = studentsNumMajor(&students, count, "ITC");
   // printf("Students: %d\n", x);
 
-  int x;
-  char str[] = "*";
-  x = studentsNumHandler(&students, count, str);
-  printf("Students: %d\n", x);
+  // int x;
+  // char str[] = "*";
+  // x = studentsNumHandler(&students, count, str);
+  // printf("Students: %d\n", x);
 
+  // int size=1;
+  // char *namesToPrint[size];
+  // studentsNameMajor(&students, count, "IIS", namesToPrint);
+  // for(int i=0; i<size; i++){
+  //   printf("%s\n", namesToPrint[i]);
+  // }
+
+  // int size=1;
+  // char *namesToPrint[size];
+  // studentsNameMajorCity(&students, count, "ITC", "Merida", namesToPrint);
+  // for(int i=0; i<size; i++){
+  //   printf("%s\n", namesToPrint[i]);
+  // }
+
+  // int size=9;
+  // char *namesToPrint[size];
+  // char str[] = "*";
+  // studentsNameHandler(&students, count, str, namesToPrint);
+  // for(int i=0; i<size; i++){
+  //   printf("%s\n", namesToPrint[i]);
+  // }
 
   free(students);
   free(grades);
