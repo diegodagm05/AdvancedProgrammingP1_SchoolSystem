@@ -38,30 +38,25 @@ int fileLines(FILE* fp){
 }
 
 sgrades kardex(sgrades *grade[], int n, int id){
+  sgrades ans;
+  ans.id = -1;
   for (int i=0; i<n; i++){
     if( (*grade+i)->id == id){
-      // printf("ID: %d A:%d B:%d C:%d D:%d\n", grade[i].id, grade[i].a, grade[i].b, grade[i].c, grade[i].d);
-      sgrades ans;
       ans.id = (*grade+i)->id;
       ans.a = (*grade+i)->a; ans.b = (*grade+i)->b;
       ans.c = (*grade+i)->c; ans.d = (*grade+i)->d;
-      return ans;
+      break;
     }
   }
-  sgrades notfound;
-  notfound.id = -1;
-  // printf("Estudiante con id [%d] no encontrado\n",id);
-  return notfound;
+  return ans;
 }
 
-char* graduationDate(student stud[], int n, int id){
+char* graduationDate(student *stud[], int n, int id){
   for (int i=0; i<n; i++){
-    if(stud[i].id == id){
-      // printf("Fecha: %s\n", stud[i].graduation);
-      return stud[i].graduation;
+    if((*stud+i)->id == id){
+      return (*stud+i)->graduation;
     }
   }
-  // printf("Estudiante con id [%d] no encontrado\n",id);
   return "/";
 }
 
@@ -189,7 +184,7 @@ int studentsNameOperatorNum(sgrades *grades[], int n, char *operator, int value)
 }
 
 void studentsNameOperator(sgrades *grades[], int n, char *operator, int value, int *ids){
-  int avgs[n], j=0, size;
+  int avgs[n], j=0;
   for(int i=0; i<n; i++){
     avgs[i] = ( (*grades+i)->a + (*grades+i)->b + (*grades+i)->c + (*grades+i)->d ) /4;
   }
@@ -259,41 +254,41 @@ int main(int argc, char *argv[]){
   char sHeader[80];
   char gHeader[60];
   
-  int count = 0;
+  int countS = 0;
   char name2[20];
   fgets(sHeader, 80, file1);
   while (!feof(file1))  //storing data of file 1
   {
-    fscanf(file1, "%d", &students[count].id);
-    fscanf(file1, "%s", students[count].name);
+    fscanf(file1, "%d", &students[countS].id);
+    fscanf(file1, "%s", students[countS].name);
       fscanf(file1, "%s", name2);
-      strcat(students[count].name, " ");
-      strcat(students[count].name, name2);
-    fscanf(file1, "%s", students[count].major);
-    fscanf(file1, "%s", students[count].city);
-    fscanf(file1, "%s", students[count].graduation);
-    count++;
+      strcat(students[countS].name, " ");
+      strcat(students[countS].name, name2);
+    fscanf(file1, "%s", students[countS].major);
+    fscanf(file1, "%s", students[countS].city);
+    fscanf(file1, "%s", students[countS].graduation);
+    countS++;
   }
   fclose(file1);
 
-  int count2 = 0;
+  int countG = 0;
   fgets(gHeader, 60, file2);
   while (!feof(file2))  //storing data of file 2
   {
-    fscanf(file2, "%d", &grades[count2].id);
-    fscanf(file2, "%d", &grades[count2].a);
-    fscanf(file2, "%d", &grades[count2].b);
-    fscanf(file2, "%d", &grades[count2].c);
-    fscanf(file2, "%d", &grades[count2].d);
-    count2++;
+    fscanf(file2, "%d", &grades[countG].id);
+    fscanf(file2, "%d", &grades[countG].a);
+    fscanf(file2, "%d", &grades[countG].b);
+    fscanf(file2, "%d", &grades[countG].c);
+    fscanf(file2, "%d", &grades[countG].d);
+    countG++;
   }
   fclose(file2);  
 
-  // for(int i=0; i<count; i++){
+  // for(int i=0; i<countS; i++){
   //   printf("%d\t%s\t%s\t%s\t%s\n", students[i].id, students[i].name, students[i].major, students[i].city, students[i].graduation);
   // }
   // printf("\n");
-  // for(int j=0; j<count2; j++){
+  // for(int j=0; j<countG; j++){
   //   printf("%d\t%d\t%d\t%d\t%d\n", grades[j].id, grades[j].a, grades[j].b, grades[j].c, grades[j].d);
   // }
 
@@ -310,8 +305,8 @@ int main(int argc, char *argv[]){
     scanf("%d",&opt);
 
     if( opt == 1 ){
-      for(int i=0; i<count; i++){
-        for(int j=0; j<count2; j++){
+      for(int i=0; i<countS; i++){
+        for(int j=0; j<countG; j++){
           if( students[i].id == grades[j].id)
             printf("%d\t%s\t%s %s\t%s\t%d %d %d %d\n", 
             students[i].id, students[i].name, students[i].major, students[i].city, 
@@ -320,45 +315,158 @@ int main(int argc, char *argv[]){
       }
     }
     else if( opt == 2 ){
+      
+      // char *input = NULL;
+      // size_t len = 0;
+      // ssize_t size = 0;
+      
+      // input = malloc(32*sizeof(char));
 
+      // if( input == NULL){
+      //   perror("Unable to allocate buffer");
+      //   exit(1);
+      // }
+      // size = getline(&input, &len, stdin);
+
+      char input[] = "Nombr";
+
+      int argsc = 0;
+      char *argsv[3];
+      char *token = strtok(input, " ");
+      while (token != NULL){
+        argsv[argsc++] = token;
+        token = strtok(NULL, " ");
+      }
+      char *query = argsv[0];
+
+      if(!strcmp(query, "Kardex")){
+
+        if(argsc == 1)
+          printf("Missing arguments\n");
+        else{
+          int idToFind = atoi(argsv[1]);
+          sgrades kardexObtained;
+          kardexObtained = kardex(&grades, countG, idToFind);
+          if(kardexObtained.id != -1)
+            printf("ID: %d A:%d B:%d C:%d D:%d\n", kardexObtained.id, kardexObtained.a, kardexObtained.b, kardexObtained.c, kardexObtained.d);
+          else
+            printf("Estudiante con id [%d] no encontrado\n",idToFind);
+        }
+
+      }
+      else if(!strcmp(query, "Fecha_estimada_graduacion")){
+
+        if(argsc == 1)
+          printf("Missing arguments\n");
+        else{
+          int idToFind = atoi(argsv[1]);
+          char *dateObtained[1];
+          *dateObtained = graduationDate(&students, countS, idToFind);
+          if( strcmp(*dateObtained, "/"))
+            printf("%s\n", *dateObtained);
+          else
+            printf("Estudiante con id [%d] no encontrado\n",idToFind);
+        }
+
+      }
+      else if(!strcmp(query, "Numero_alumnos")){
+        
+        if(argsc == 1)
+          printf("Missing arguments\n");
+        else{
+          int sNum;
+          char buffer[] ="";
+          for(int i=1; i<argsc; i++){
+            strcat(buffer, argsv[i]);
+            strcat(buffer, " ");
+          }
+          sNum = studentsNumHandler(&students, countS, buffer);
+          // if()
+          // else
+            printf("Estudiantes: %d\n", sNum);
+        } 
+
+      }
+      else if(!strcmp(query, "Nombre_alumnos")){
+        
+        if(argsc == 1)
+          printf("Missing arguments\n");
+        else{
+          if( !strcmp(argsv[1], "<") || !strcmp(argsv[1], ">") || !strcmp(argsv[1], "==") || !strcmp(argsv[1], "!=")){
+            int valueComp = atoi(argsv[2]);
+            int size = studentsNameOperatorNum(&grades, countG, argsv[1], valueComp);
+            int idsObtained[size];
+            studentsNameOperator(&grades, countG, argsv[1], valueComp, idsObtained);
+            for(int i=0; i<size; i++){
+              for(int j=0; j<countS; j++){
+                if( *(idsObtained + i) == students[j].id){
+                  printf("%s\n", students[j].name);
+                  break;
+                }
+              }
+            }
+          }
+          else{
+            int sNum;
+            char buffer[] ="";
+            for(int i=1; i<argsc; i++){
+              strcat(buffer, argsv[i]);
+              strcat(buffer, " ");
+            }
+            sNum = studentsNumHandler(&students, countS, buffer);
+            char *namesObtained[sNum];
+            studentsNameHandler(&students, countS, buffer, namesObtained);
+            for(int i=0; i<sNum; i++){
+              printf("%s\n", namesObtained[i]);
+            }
+          }
+        }
+
+      }
+      else{
+        printf("Invalid query\n");
+      }
     }
-    else if( opt == 3 )
+    else if( opt == 3 ){
+      free(students);
+      free(grades);
       return 0;
+    }
     else
       printf("Invalid option\n");
   }
 
   // sgrades x;
-  // x = kardex(&grades, count2, 987);
+  // x = kardex(&grades, countG, 987);
   // printf("ID: %d A:%d B:%d C:%d D:%d\n", x.id, x.a, x.b, x.c, x.d);
 
   // char *x[2];
-  // *x = graduationDate(students, count, 0);
+  // *x = graduationDate(students, countS, 0);
   // printf("%s\n", *x);
 
   // int x;
-  // x = studentsNumMajorCity(&students, count, "ITC", "Merida");
+  // x = studentsNumMajorCity(&students, countS, "ITC", "Merida");
   // printf("Students: %d\n", x);
 
   // int x;
-  // x = studentsNumMajor(&students, count, "ITC");
+  // x = studentsNumMajor(&students, countS, "ITC");
   // printf("Students: %d\n", x);
 
   // int x;
   // char str[] = "*";
-  // x = studentsNumHandler(&students, count, str);
+  // x = studentsNumHandler(&students, countS, str);
   // printf("Students: %d\n", x);
 
   // int size=1;
   // char *namesToPrint[size];
-  // studentsNameMajor(&students, count, "IIS", namesToPrint);
+  // studentsNameMajor(&students, countS, "IIS", namesToPrint);
   // for(int i=0; i<size; i++){
   //   printf("%s\n", namesToPrint[i]);
   // }
 
   // int size=1;
   // char *namesToPrint[size];
-  // studentsNameMajorCity(&students, count, "ITC", "Merida", namesToPrint);
+  // studentsNameMajorCity(&students, countS, "ITC", "Merida", namesToPrint);
   // for(int i=0; i<size; i++){
   //   printf("%s\n", namesToPrint[i]);
   // }
@@ -366,17 +474,17 @@ int main(int argc, char *argv[]){
   // int size=9;
   // char *namesToPrint[size];
   // char str[] = "*";
-  // studentsNameHandler(&students, count, str, namesToPrint);
+  // studentsNameHandler(&students, countS, str, namesToPrint);
   // for(int i=0; i<size; i++){
   //   printf("%s\n", namesToPrint[i]);
   // }
 
-  // int x = studentsNameOperatorNum(&grades, count2, "!=", 90);
+  // int x = studentsNameOperatorNum(&grades, countG, "!=", 90);
 
   // int *ptr, idsToPrint[x];
-  // studentsNameOperator(&grades, count2, "!=", 90, idsToPrint);
+  // studentsNameOperator(&grades, countG, "!=", 90, idsToPrint);
   // for(int i=0; i<x; i++){
-  //   for(int j=0; j<count; j++){
+  //   for(int j=0; j<countS; j++){
   //     if( *(idsToPrint + i) == students[j].id){
   //       printf("%s\n", students[j].name);
   //       break;
@@ -384,7 +492,5 @@ int main(int argc, char *argv[]){
   //   }
   // }
 
-  free(students);
-  free(grades);
   return 0;
 }
