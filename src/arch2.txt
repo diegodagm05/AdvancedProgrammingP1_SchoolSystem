@@ -7,3 +7,5 @@ id_alumno   materia A   materia B   materia C   materia D
 908         89          77          87          100
 912         71          99          76          90
 987         60          100         99          90
+111         80          90          75          80
+198         60          30          100         100

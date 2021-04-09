@@ -8,3 +8,4 @@ Id_alumno   nombre_alumno   Carrera Ciudad origen   Fecha estimada graduacion
 176         Carolina Sada   IDS     Cancun          11/12/2021
 901         Gabriel Castro  IMD     Merida          26/05/2023
 111         Abril Gomez     ITC     Merida          26/05/2022
+198         Jennifer Solis  IMT     Aguascalientes  26/12/2030
