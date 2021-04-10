@@ -26,10 +26,24 @@ typedef struct{
 
 int fileLines(FILE* fp);
 
-void kardex(sgrades grade[], int n, int id);
+sgrades kardex(sgrades *grade[], int n, int id);
 
-void graduationDate(student stud[], int n, int id);
+char* graduationDate(student *stud[], int n, int id);
 
-int studentsNumMajorCity(student stud[], int n, char major[], char city[]);
+int studentsNumMajorCity(student *stud[], int n, char major[], char city[]);
+
+int studentsNumMajor(student *stud[], int n, char major[]);
+
+int studentsNumHandler(student *stud[], int n, char buff[]);
+
+void studentsNameMajorCity(student *stud[], int n, char major[], char city[],char *names[]);
+
+void studentsNameMajor(student *stud[], int n, char major[], char *names[]);
+
+void studentsNameHandler(student *stud[], int n, char buff[], char *names[]);
+
+int studentsNameOperatorNum(sgrades *grades[], int n, char *operator, int value);
+
+void studentsNameOperator(sgrades *grades[], int n, char *operator, int value, int *ids);
 
 #endif
