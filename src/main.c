@@ -236,7 +236,7 @@ int main(int argc, char *argv[]){
         if(!strcmp(query, "Kardex")){
 
           if(argsc == 1){
-            printf("Missing arguments\n");
+            printf("[ERROR]: Missing arguments\n");
             if(VERBOSE){
               printf("[INFO:] [Consulta fallida]\n");
               sleep(1);
@@ -271,7 +271,7 @@ int main(int argc, char *argv[]){
         else if(!strcmp(query, "Fecha_estimada_graduacion")){
 
           if(argsc == 1){
-            printf("Missing arguments\n");
+            printf("[ERROR]: Missing arguments\n");
             if(VERBOSE){
               printf("[INFO:] [Consulta fallida]\n");
               sleep(1);
@@ -306,7 +306,7 @@ int main(int argc, char *argv[]){
         else if(!strcmp(query, "Numero_alumnos")){
           
           if(argsc == 1){
-            printf("Missing arguments\n");
+            printf("[ERROR]: Missing arguments\n");
             if(VERBOSE){
               printf("[INFO:] [Consulta fallida]\n");
               sleep(1);
@@ -339,7 +339,7 @@ int main(int argc, char *argv[]){
         else if(!strcmp(query, "Nombre_alumnos")){
           
           if(argsc == 1){
-            printf("Missing arguments\n");
+            printf("[ERROR]: Missing arguments\n");
             if(VERBOSE){
               printf("[INFO:] [Consulta fallida]\n");
               sleep(1);
@@ -414,7 +414,7 @@ int main(int argc, char *argv[]){
 
         }
         else{
-          printf("Invalid query\n");
+          printf("[ERROR]: Invalid query\n");
           if(VERBOSE){
             printf("[INFO:] [Consulta fallida]\n");
             sleep(1);
@@ -443,7 +443,7 @@ int main(int argc, char *argv[]){
         return 0;
       }
       else
-        printf("Invalid option\n");
+        printf("[ERROR]: Invalid option\n");
     }
   }
   return 0;
