@@ -72,6 +72,10 @@ int main(int argc, char *argv[]){
         printf("\t\t   [!=] Diferente de\n\n");
     
   }
+  else if(argc < 3){
+    printf("[ERROR]: Archivo(s) de datos no especificados\n");
+    exit(1);
+  }
   else{
 
     //Variables of type file
