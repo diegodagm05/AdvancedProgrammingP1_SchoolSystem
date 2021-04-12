@@ -1,7 +1,11 @@
-# AdvancedProgrammingP1_SchoolSystem{
+# AdvancedProgrammingP1_SchoolSystem
+
+*   Diego Guerrero - A01625199
+*   Tecnologico de Monterrey
+*   Advanced Programming - Project 1
 
 School system that simulates a DBMS. Storing students data such as id, name, major, city and expected graduation year.
-  The queries to use are the following:
+  The queries to use are the following:  
 
 *******************
 Kardex <student_id>  
@@ -15,9 +19,9 @@ Nombre_alumnos *
 Nombre_alumnos <operator> <number_value>  
   Uses an operator to check if the average of the students grades meets the condition with the given value number.  
     OPERATORS:  
-    <, >, ==, !=  
+    <, >, ==, !=    
 
-******************
+******************  
 In order to use the program you have to place two required files in the "src" folder that will contain the students information.
   The files structure has to be as follows:
   
