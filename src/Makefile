@@ -1,16 +1,11 @@
-# makefile
+# makefile for dynamic library
 
 CC = gcc
-CFLAGS = -g -Wall
 
-project1: func.o main.o
-	$(CC) $(CFLAGS) -o project1 func.o main.o
-
-func.o: func.c func.h
-	$(CC) $(CFLAGS) -c func.c
-
-main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
+app.out: main.c ../lib/src/func.h
+	$(CC) -fPIC -c ../lib/src/func.c -o ../lib/dynamic/func.o 
+	$(CC) -shared -o ../lib/dynamic/libfunc.so ../lib/dynamic/func.o 
+	$(CC) main.c -L../lib/dynamic/ -lfunc -o ../bin/app.out
 
 clean:
-	rm func.o main.o project1
+	rm -f ../lib/dynamic/func.o ../lib/dynamic/libfunc.so ../bin/app.out

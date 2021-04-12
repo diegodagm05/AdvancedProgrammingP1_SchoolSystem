@@ -208,7 +208,7 @@ int main(int argc, char *argv[]){
         size_t len = 60;
 
         getline(&inputQuery, &len, stdin); //store the query from the user
-        inputQuery[strlen(inputQuery)-1] = '\0';
+        inputQuery[strlen(inputQuery)-1] = '\0'; //add the end character to the query
         
         char fullQuery[20];
         strcpy(fullQuery, inputQuery);
