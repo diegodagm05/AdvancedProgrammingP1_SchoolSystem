@@ -15,7 +15,6 @@
 #include <unistd.h>
 // #endif
 
-
 #define TRUE 1
 #define FALSE 0
 
@@ -24,7 +23,7 @@ int main(int argc, char *argv[]){
   //variables to execute flags;
   int HELP = FALSE, VERBOSE = FALSE, TOFILE = FALSE;
   int flag;
-  char argFile[100];
+  char fileName[] = "";
 
   while ((flag = getopt(argc, argv, "hvo:")) != -1){
     switch (flag){
@@ -36,7 +35,7 @@ int main(int argc, char *argv[]){
       break;
     case 'o':
       TOFILE = TRUE;
-      strcpy(argFile,optarg);
+      strcpy(fileName,optarg);
       break;
     case '?':
       if(optopt == 'o')
@@ -77,8 +76,6 @@ int main(int argc, char *argv[]){
 
     //Variables of type file
     FILE *file1, *file2, *outFile;
-    char fileName[] = "";
-    strcpy(fileName, argFile);
     
     if(TOFILE && VERBOSE){
       printf("[INFO:] [Abriendo archivo de salida]\n");
@@ -205,26 +202,21 @@ int main(int argc, char *argv[]){
       }
       else if( opt == 2 ){ //option 2, do a query
         
-        // char *input = "";
-        // size_t len = 0;
-        // ssize_t size = 0;
+        while ( (getchar()) != '\n'); //clean the buffer
         
-        // input = malloc(32*sizeof(char));
+        char *inputQuery = NULL;
+        size_t len = 60;
 
-        // if( input == NULL){
-        //   perror("Unable to allocate buffer");
-        //   exit(1);
-        // }
-        // size = getline(&input, &len, stdin);
-
-        char input[] = "Numero_alumnos *";
+        getline(&inputQuery, &len, stdin); //store the query from the user
+        inputQuery[strlen(inputQuery)-1] = '\0';
+        
         char fullQuery[20];
-        strcpy(fullQuery, input);
+        strcpy(fullQuery, inputQuery);
 
         //separate the query and its arguments into different strings
         int argsc = 0;
         char *argsv[3];
-        char *token = strtok(input, " ");
+        char *token = strtok(inputQuery, " ");
         while (token != NULL){
           argsv[argsc++] = token;
           token = strtok(NULL, " ");
@@ -424,6 +416,7 @@ int main(int argc, char *argv[]){
             sleep(1);
           }
         }
+        free(inputQuery);
       }
       else if( opt == 3 ){
 
