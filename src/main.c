@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
 
 // #ifdef _WIN32
 // #include <Windows.h>
@@ -18,17 +19,51 @@
 #define TRUE 1
 #define FALSE 0
 
+// puedes terminar de traducir a ingles...
+// puedes pasar esta parte a un archivo tipo --> utils.h
+// trata de manter lineas hasta la columna 80
+#define USAGE_FMT "%s [-v|-h|-o <ouputFileName>]\n"\
+                  "Simulation of a scholar DBMS "\
+                  "largest, smallest and sum of the largest with smallest.\n"\
+                  "\tSistema que simula un DBMS, donde se almacena la"\
+                  "informacion de una lista de estudiantes obtenida de"\
+                  "archivos que el usario debe proveer, con sus respectivos "\
+                  "datos.\n"\
+                  "QUERIES\n\n"\
+                  "\tKardex <id_estudiante>\n\t\tMuestra las calificaciones"\
+                  "del estudiante con el id provisto.\n\n"\
+                  "\tFecha_estimada_graduacion <estudiante_id>\n\t\tMuestra la fecha de graduacion del estudiante con el id provisto.\n\n"\
+                  "\tNumero_alumnos <nombre_carrera> <ciudad_origen>\n\t\tMuestra el numero de alumnos que cumplen con la carrera y ciudad provista.\n\n"\
+                  "\tNumero_alumnos <nombre_carrera>\n\t\tMuestra el numero de alumnos que cumplen con la carrera provista.\n\n"\
+                  "\tNumero_alumnos *\n\t\tMuestra el numero total de alumnos.\n\n"\
+                  "\tNombre_alumnos <nombre_carrera> <ciudad_origen>\n\t\tMuestra la lista de nombres de alumnos que cumplen con la carrera y ciudad provista.\n\n"\
+                  "\tNombre_alumnos <nombre_carrera>\n\t\tMuestra la lista de nombres de alumnos que cumplen con la carrera provista.\n\n"\
+                  "\tNombre_alumnos *\n\t\tMuestra la lista total de nombres de alumnos.\n\n"\
+                  "\tNombre_alumnos <operador> <numero>\n\t\tMuestra la lista de nombres de alumnos cuyo promedio cumpla con la condicion del operador y numero.\n\n"\
+                  "\t\tOperadores:\n"\
+                  "\t\t   [<] Menor que\n"\
+                  "\t\t   [>] Mayor que\n"\
+                  "\t\t   [==] Igual a\n"\
+                  "\t\t   [!=] Diferente de\n\n"
+
+void
+usage (const char *progname, int opt)
+{
+    fprintf(stderr, USAGE_FMT, progname);
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char *argv[]){
 
   //variables to execute flags;
-  int HELP = FALSE, VERBOSE = FALSE, TOFILE = FALSE;
+  int VERBOSE = FALSE, TOFILE = FALSE;
   int flag;
   char fileName[] = "";
 
   while ((flag = getopt(argc, argv, "hvo:")) != -1){
     switch (flag){
     case 'h':
-      HELP = TRUE;
+      usage(basename(argv[0]), flag);
       break;
     case 'v':
       VERBOSE = TRUE;
@@ -47,32 +82,7 @@ int main(int argc, char *argv[]){
       break;
     }
   }
-  
-  if(HELP){
-
-    printf("\nPROYECTO\n\n");
-      printf("\tSimulacion de un DBMS escolar\n\n");
-    printf("DESCRIPCION\n\n");
-      printf("\tSistema que simula un DBMS, donde se almacena la informacion de una lista de estudiantes obtenida de archivos que el usario debe proveer, con sus respectivos datos.\n");
-      printf("\tRealizacion de consultas con la informacion almacenada. \n\n");
-    printf("QUERIES\n\n");
-      printf("\tKardex <id_estudiante>\n\t\tMuestra las calificaciones del estudiante con el id provisto.\n\n");
-      printf("\tFecha_estimada_graduacion <estudiante_id>\n\t\tMuestra la fecha de graduacion del estudiante con el id provisto.\n\n");
-      printf("\tNumero_alumnos <nombre_carrera> <ciudad_origen>\n\t\tMuestra el numero de alumnos que cumplen con la carrera y ciudad provista.\n\n");
-      printf("\tNumero_alumnos <nombre_carrera>\n\t\tMuestra el numero de alumnos que cumplen con la carrera provista.\n\n");
-      printf("\tNumero_alumnos *\n\t\tMuestra el numero total de alumnos.\n\n");
-      printf("\tNombre_alumnos <nombre_carrera> <ciudad_origen>\n\t\tMuestra la lista de nombres de alumnos que cumplen con la carrera y ciudad provista.\n\n");
-      printf("\tNombre_alumnos <nombre_carrera>\n\t\tMuestra la lista de nombres de alumnos que cumplen con la carrera provista.\n\n");
-      printf("\tNombre_alumnos *\n\t\tMuestra la lista total de nombres de alumnos.\n\n");
-      printf("\tNombre_alumnos <operador> <numero>\n\t\tMuestra la lista de nombres de alumnos cuyo promedio cumpla con la condicion del operador y numero.\n\n");
-        printf("\t\tOperadores:\n");
-        printf("\t\t   [<] Menor que\n");
-        printf("\t\t   [>] Mayor que\n");
-        printf("\t\t   [==] Igual a\n");
-        printf("\t\t   [!=] Diferente de\n\n");
-    
-  }
-  else if(argc < 3){
+  if(argc < 3){
     printf("[ERROR]: Archivo(s) de datos no especificados\n");
     exit(1);
   }
